@@ -1,0 +1,53 @@
+Postgres
+
+cfQuery = "SELECT DISTINCT ji.ID AS ROLEISSUE, ttCF.TEXTVALUE AS ROLEESTIMATE, 
+
+assigneeCF.TEXTVALUE AS ROLEASSIGNEE, wrl.\"ROLEID\" AS WORKLOGROLE, SUM(wl.TIMEWORKED) AS ROLESPENT FROM " + tableIssue + " 
+
+ji LEFT JOIN " + tableCFValue + " ttCF ON ji.ID = ttCF.ISSUE LEFT JOIN " + tableCFValue + " assigneeCF ON ji.ID = assigneeCF.ISSUE LEFT JOIN " + 
+
+tableWorklog + " wl ON ji.ID = wl.ISSUEID LEFT JOIN " + tableWorklogRole + " wrl ON wl.ISSUEID = wrl.\"WORKLOGID\" WHERE ji.ID IN (" + fixVersionQuery + ") 
+
+AND ji.PROJECT = " + project.getId() + " AND ttCF.TEXTVALUE IS NOT NULL AND assigneeCF.TEXTVALUE IS NOT NULL AND assigneeCF.TEXTVALUE LIKE '%" + user.getKey() + "%' AND ttCF.CUSTOMFIELD = " + timeTrackingCF.getIdAsLong() + " 
+
+AND assigneeCF.CUSTOMFIELD = " + assigneeCF.getIdAsLong() + " GROUP BY ROLEISSUE, ROLEESTIMATE, ROLEASSIGNEE, WORKLOGROLE";
+
+
+
+MSSQL
+
+cfQuery = "SELECT DISTINCT ji.ID AS ROLEISSUE, CAST(ttCF.TEXTVALUE AS nvarchar) AS ROLEESTIMATE, CAST(assigneeCF.TEXTVALUE AS nvarchar) AS ROLEASSIGNEE, 
+
+wrl.ROLEID AS WORKLOGROLE, SUM(wl.TIMEWORKED) AS ROLESPENT FROM " + tableIssue + " ji LEFT JOIN " + tableCFValue + " ttCF ON ji.ID = ttCF.ISSUE LEFT JOIN " + 
+
+tableCFValue + " assigneeCF ON ji.ID = assigneeCF.ISSUE LEFT JOIN " + tableWorklog + " wl ON ji.ID = wl.ISSUEID LEFT JOIN " + tableWorklogRole + " wrl 
+
+ON wl.ID = wrl.WORKLOGID WHERE ji.ID IN (" + fixVersionQuery + ") AND ji.PROJECT = " + project.getId() + " AND ttCF.TEXTVALUE IS NOT NULL AND assigneeCF.TEXTVALUE IS NOT NULL 
+
+AND assigneeCF.TEXTVALUE LIKE '%" + user.getKey() + "%' AND ttCF.CUSTOMFIELD = " + timeTrackingCF.getIdAsLong() + " AND assigneeCF.CUSTOMFIELD = " + assigneeCF.getIdAsLong() + 
+
+" GROUP BY ji.ID, CAST(ttCF.TEXTVALUE AS nvarchar), CAST(assigneeCF.TEXTVALUE AS nvarchar), wrl.ROLEID";
+
+
+
+Else
+
+cfQuery = "SELECT DISTINCT ji.ID AS ROLEISSUE, ttCF.TEXTVALUE AS ROLEESTIMATE, assigneeCF.TEXTVALUE AS ROLEASSIGNEE, wrl.ROLEID AS WORKLOGROLE, 
+
+SUM(wl.TIMEWORKED) AS ROLESPENT FROM " + tableIssue + " ji LEFT JOIN " + tableCFValue + " ttCF ON ji.ID = ttCF.ISSUE LEFT JOIN " + tableCFValue + 
+
+" assigneeCF ON ji.ID = assigneeCF.ISSUE LEFT JOIN " + tableWorklog + " wl ON ji.ID = wl.ISSUEID LEFT JOIN " + tableWorklogRole + " wrl 
+
+ON wl.ID = wrl.WORKLOGID WHERE ji.ID IN (" + fixVersionQuery + ") AND ji.PROJECT = " + project.getId() + " AND ttCF.TEXTVALUE IS NOT NULL AND assigneeCF.TEXTVALUE IS NOT NULL 
+
+AND assigneeCF.TEXTVALUE LIKE '%" + user.getKey() + "%' AND ttCF.CUSTOMFIELD = " + timeTrackingCF.getIdAsLong() + " AND assigneeCF.CUSTOMFIELD = " + assigneeCF.getIdAsLong() + 
+
+" GROUP BY ROLEISSUE, ROLEESTIMATE, ROLEASSIGNEE, WORKLOGROLE";
+
+
+
+
+			    <value>
+			        <key>userWise</key>
+			        <value>report.estimationUpdate.viewOption.userWise</value>
+			    </value>
