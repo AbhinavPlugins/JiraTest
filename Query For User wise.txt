@@ -50,4 +50,4 @@ AND assigneeCF.TEXTVALUE LIKE '%" + user.getKey() + "%' AND ttCF.CUSTOMFIELD = "
 			    <value>
 			        <key>userWise</key>
 			        <value>report.estimationUpdate.viewOption.userWise</value>
-			    </value>
+			    </valu
