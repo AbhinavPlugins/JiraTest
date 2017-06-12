@@ -1,4 +1,4 @@
-Postgres
+Postgre
 
 cfQuery = "SELECT DISTINCT ji.ID AS ROLEISSUE, ttCF.TEXTVALUE AS ROLEESTIMATE, 
 
