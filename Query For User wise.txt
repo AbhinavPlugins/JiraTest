@@ -29,6 +29,7 @@ AND assigneeCF.TEXTVALUE LIKE '%" + user.getKey() + "%' AND ttCF.CUSTOMFIELD = "
 " GROUP BY ji.ID, CAST(ttCF.TEXTVALUE AS nvarchar), CAST(assigneeCF.TEXTVALUE AS nvarchar), wrl.ROLEID";
 
 
+Lets hope this works, i mean the smart commit lets me see what goes in the event listener
 
 Else
 
